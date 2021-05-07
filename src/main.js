@@ -3,7 +3,12 @@ import 'core-js/stable'
 
 import { createApp } from 'vue'
 import App from './App.vue'
+import router from './router/index'
 
 import 'ant-design-vue/dist/antd.css';
 
-createApp(App).mount('#app')
+const app = createApp(App)
+
+app.use(router)
+
+app.mount('#app')
