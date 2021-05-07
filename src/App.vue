@@ -1,21 +1,21 @@
 <template>
   <Layout style="min-height: 100vh">
-    <Sider v-model:collapsed="collapsed" collapsible>
-      <div class="logo" />
-      <Menu theme="dark" v-model:selectedKeys="selectedKeys" mode="inline">
+    <Header :style="{ display: 'flex', position: 'fixed', zIndex: 1, width: '100%', background: 'white' }">
+      <img src="./assets/logo.jpg" class="logo" alt="">
+      <Menu theme="light" v-model:selectedKeys="selectedKeys" mode="horizontal" :style="{lineHeight: '64px'}">
         <MenuItem key="1">
           <pie-chart-outlined />
-          <span>Option 1</span>
+          <span>首页</span>
         </MenuItem>
         <MenuItem key="2">
           <desktop-outlined />
-          <span>Option 2</span>
+          <span>动态</span>
         </MenuItem>
         <SubMenu key="sub1">
           <template #title>
             <span>
               <user-outlined />
-              <span>User</span>
+              <span>链接</span>
             </span>
           </template>
           <MenuItem key="3">Tom</MenuItem>
@@ -37,16 +37,16 @@
           <span>File</span>
         </MenuItem>
       </Menu>
-    </Sider>
-    <Layout>
-      <Content
-        style="margin: 16px"
-        v-for="(category, index) in navList" :key="index"
-      >
+    </Header>
+    <Content
+      style="margin: 64px 16px 20px"
+    >
+      <Row v-for="(category, index) in navList" :key="index" style="margin: 16px">
         <Card
           :title="category.category"
           :bordered="false"
           :headStyle="{'border-bottom': 'none'}"
+          style="width: 100%"
         >
           <Row :gutter="[8, 8]">
             <Col
@@ -73,11 +73,11 @@
             </Col>
           </Row>
         </Card>
-      </Content>
-      <Footer style="text-align: center">
-        COLDTEA INSIGHT OF INNOVATION ROAD
-      </Footer>
-    </Layout>
+      </Row>
+    </Content>
+    <Footer style="text-align: center">
+      COLDTEA INSIGHT OF INNOVATION ROAD
+    </Footer>
   </Layout>
 </template>
 <script>
@@ -90,7 +90,7 @@ import {
 } from '@ant-design/icons-vue';
 import { defineComponent, ref } from 'vue';
 import { Layout, Menu, Card, Row, Col, Avatar } from 'ant-design-vue';
-const { Sider, Content, Footer} = Layout
+const { Header, Content, Footer} = Layout
 const MenuItem = Menu.Item
 const SubMenu = Menu.SubMenu
 const CardMeta = Card.Meta
@@ -102,7 +102,7 @@ export default defineComponent({
     TeamOutlined,
     FileOutlined,
     Layout,
-    Sider,
+    Header,
     Content,
     Footer,
     Menu,
@@ -122,15 +122,10 @@ export default defineComponent({
       navList: [{
         category: '团队组织',
         children: [{
-          title: '腾讯全端AlloyTeam团队',
-          icon: 'http://www.alloyteam.com/favicon.ico',
-          description: '腾讯全端AlloyTeam团队',
-          link: 'http://www.alloyteam.com/',
-        },{
-          title: 'ISUX',
-          icon: 'https://isux.tencent.com/favicon.ico',
-          description: '腾讯社交用户体验设计',
-          link: 'https://isux.tencent.com/',
+          title: 'Ant Design',
+          icon: 'https://ant.design/favicon.ico',
+          description: '一套企业级 UI 设计语言和 React 组件库',
+          link: 'https://ant.design/',
         },{
           title: 'FEX',
           icon: 'http://fex.baidu.com/favicon.ico',
@@ -142,10 +137,15 @@ export default defineComponent({
           description: '凹凸实验室(Aotu.io) 始建于2015年，是一个年轻基情的技术社区组织。O2面向多终端技术体系，致力于构建沉淀与分享包括但不限于交互、页面制作技巧、前端开发、原生APP开发等方面的专业知识及案例。',
           link: 'https://aotu.io/',
         },{
-          title: 'Ant Design',
-          icon: 'https://ant.design/favicon.ico',
-          description: '一套企业级 UI 设计语言和 React 组件库',
-          link: 'https://ant.design/',
+          title: 'ISUX',
+          icon: 'https://isux.tencent.com/favicon.ico',
+          description: '腾讯社交用户体验设计',
+          link: 'https://isux.tencent.com/',
+        },{
+          title: '腾讯全端AlloyTeam团队',
+          icon: 'http://www.alloyteam.com/favicon.ico',
+          description: '腾讯全端AlloyTeam团队',
+          link: 'http://www.alloyteam.com/',
         },]
       },{
         category: '开发社区',
@@ -275,7 +275,118 @@ export default defineComponent({
           link: 'http://www.highcharts.com/',
         },]
       },{
-        category: '',
+        category: '游戏框架',
+        children: [{
+          title: 'PhaserJS',
+          icon: 'http://phaser.io/favicon.ico',
+          description: 'A fast, fun and free open source HTML5 game framework',
+          link: 'http://phaser.io/',
+        },{
+          title: 'Cocos_游戏开发引擎',
+          icon: 'https://www.cocos.com/favicon.ico',
+          description: '开源免费跨平台游戏开发引擎',
+          link: 'https://www.cocos.com/',
+        },{
+          title: 'EgretPro',
+          icon: 'https://www.egret.com/favicon.ico',
+          description: '一站式 HTML5 游戏开发工具',
+          link: 'https://www.egret.com/',
+        }]
+      },{
+        category: 'CSS相关',
+        children: [{
+          title: 'CSS-Tricks',
+          icon: 'https://css-tricks.com/favicon.ico',
+          description: '一个关于运用CSS技术进行网络开发和设计的小技巧的交流网站',
+          link: 'https://css-tricks.com/',
+        },{
+          title: 'Css Wizardry',
+          icon: 'https://csswizardry.com/favicon.ico',
+          description: 'Front-end Architecture and Performance Engineering',
+          link: 'https://csswizardry.com/',
+        },{
+          title: 'SASS',
+          icon: 'https://sass.bootcss.com/documentationfavicon.ico',
+          description: 'Sass 是成熟、稳定、强大的 CSS 扩展语言',
+          link: 'https://sass.bootcss.com/documentation',
+        },{
+          title: 'Less',
+          icon: 'https://less.bootcss.com/favicon.ico',
+          description: '一种将css赋予了动态语言特性的动态样式语言',
+          link: 'https://less.bootcss.com/',
+        },{
+          title: 'Stylus',
+          icon: 'https://stylus-lang.com/favicon.ico',
+          description: 'EXPRESSIVE, DYNAMIC, ROBUST CSS',
+          link: 'https://stylus-lang.com/',
+        },]
+      },{
+        category: 'NODE.js相关',
+        children: [{
+          title: 'KOA',
+          icon: 'https://koa.bootcss.com/favicon.ico',
+          description: '基于Nodejs的新一代框架。',
+          link: 'https://koa.bootcss.com/',
+        },{
+          title: 'Express',
+          icon: 'https://www.expressjs.com.cn/favicon.ico',
+          description: '基于 Node.js 平台，快速、开放、极简的 web 开发框架。',
+          link: 'https://www.expressjs.com.cn/',
+        },]
+      },{
+        category: 'IDE',
+        children: [{
+          title: 'VScode',
+          icon: 'https://code.visualstudio.com/favicon.ico',
+          description: '前端最流行的框架',
+          link: 'https://code.visualstudio.com/',
+        },{
+          title: 'WebStorm',
+          icon: 'https://www.jetbrains.com/webstorm/favicon.ico',
+          description: 'Google出品',
+          link: 'https://www.jetbrains.com/webstorm/',
+        },]
+      },{
+        category: '构建工具',
+        children: [{
+          title: 'Webpack',
+          icon: 'https://webpack.js.org/favicon.ico',
+          description: '代码模块化构建打包工具',
+          link: 'https://webpack.js.org/',
+        },{
+          title: 'Gulp',
+          icon: 'https://www.gulpjs.com.cn/favicon.ico',
+          description: '基于流的自动化构建工具',
+          link: 'https://www.gulpjs.com.cn/',
+        },{
+          title: 'Babel',
+          icon: 'https://babeljs.io/favicon.ico',
+          description: '使用最新的规范来编写js',
+          link: 'https://babeljs.io/',
+        },]
+      },{
+        category: '字体图标',
+        children: [{
+          title: 'fontawesome',
+          icon: 'https://fontawesome.com/favicon.ico',
+          description: '为bootstrap设计的完美图标字体',
+          link: 'https://fontawesome.com/',
+        },{
+          title: 'Iconfont',
+          icon: 'https://www.iconfont.cn/favicon.ico',
+          description: '阿里巴巴矢量图标库',
+          link: 'https://www.iconfont.cn/',
+        },]
+      },{
+        category: '设计资源',
+        children: [{
+          title: '花瓣',
+          icon: 'https://huaban.com/favicon.ico',
+          description: '花瓣，陪你做生活的设计师。',
+          link: 'https://huaban.com/home/',
+        },]
+      },{
+        category: '优秀站点',
         children: [{
           title: '',
           icon: 'favicon.ico',
@@ -283,36 +394,12 @@ export default defineComponent({
           link: '',
         },]
       },{
-        category: '',
+        category: '个人网站',
         children: [{
-          title: '',
-          icon: 'favicon.ico',
-          description: '',
-          link: '',
-        },]
-      },{
-        category: '',
-        children: [{
-          title: '',
-          icon: 'favicon.ico',
-          description: '',
-          link: '',
-        },]
-      },{
-        category: '',
-        children: [{
-          title: '',
-          icon: 'favicon.ico',
-          description: '',
-          link: '',
-        },]
-      },{
-        category: '',
-        children: [{
-          title: '',
-          icon: 'favicon.ico',
-          description: '',
-          link: '',
+          title: '创新驿路',
+          icon: 'https://innovationroad.site/favicon.ico',
+          description: '关于创新的网站',
+          link: 'https://innovationroad.site/',
         },]
       },]
     };
@@ -323,13 +410,6 @@ export default defineComponent({
 .logo {
   height: 32px;
   margin: 16px;
-  background: rgba(255, 255, 255, 0.3);
 }
 
-.site-layout .site-layout-background {
-  background: #fff;
-}
-[data-theme='dark'] .site-layout .site-layout-background {
-  background: #141414;
-}
 </style>
