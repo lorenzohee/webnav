@@ -3,8 +3,8 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "serve": "pm2 start server/pm2.ecosystem.config.js --env production",
     "start": "concurrently -c \"yellow.bold,green.bold\" -n \"SERVER,BUILD\" \"nodemon server\" \"vue-cli-service serve\"",
-    "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
@@ -37,6 +37,7 @@
     "@vue/cli-plugin-eslint": "~4.5.0",
     "@vue/cli-service": "~4.5.0",
     "@vue/compiler-sfc": "^3.0.0",
+    "axios": "^0.21.1",
     "babel-eslint": "^10.1.0",
     "babel-plugin-import": "^1.13.3",
     "babel-plugin-transform-remove-console": "^6.9.4",
@@ -48,6 +49,7 @@
     "eslint-plugin-standard": "^5.0.0",
     "eslint-plugin-vue": "^7.9.0",
     "vue-meta": "^2.4.0",
+    "vue-request": "^1.1.1",
     "vue-router": "^4.0.6"
   },
   "eslintConfig": {

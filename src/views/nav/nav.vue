@@ -1,113 +1,46 @@
 <template>
-  <Layout style="min-height: 100vh">
-    <Header :style="{ display: 'flex', position: 'fixed', zIndex: 1, width: '100%', background: 'white' }">
-      <img src="../../assets/logo.jpg" class="logo" alt="">
-      <Menu theme="light" v-model:selectedKeys="selectedKeys" mode="horizontal" :style="{lineHeight: '64px'}">
-        <MenuItem key="1">
-          <pie-chart-outlined />
-          <span>首页</span>
-        </MenuItem>
-        <MenuItem key="2">
-          <desktop-outlined />
-          <span>动态</span>
-        </MenuItem>
-        <SubMenu key="sub1">
-          <template #title>
-            <span>
-              <user-outlined />
-              <span>链接</span>
-            </span>
-          </template>
-          <MenuItem key="3">Tom</MenuItem>
-          <MenuItem key="4">Bill</MenuItem>
-          <MenuItem key="5">Alex</MenuItem>
-        </SubMenu>
-        <SubMenu key="sub2">
-          <template #title>
-            <span>
-              <team-outlined />
-              <span>Team</span>
-            </span>
-          </template>
-          <MenuItem key="6">Team 1</MenuItem>
-          <MenuItem key="8">Team 2</MenuItem>
-        </SubMenu>
-        <MenuItem key="9">
-          <file-outlined />
-          <span>File</span>
-        </MenuItem>
-      </Menu>
-    </Header>
-    <Content
-      style="margin: 64px 16px 20px"
+  <Row v-for="(category, index) in navList" :key="index" style="margin: 16px">
+    <Card
+      :title="category.title"
+      :bordered="false"
+      :headStyle="{'border-bottom': 'none'}"
+      style="width: 100%"
     >
-      <Row v-for="(category, index) in navList" :key="index" style="margin: 16px">
-        <Card
-          :title="category.category"
-          :bordered="false"
-          :headStyle="{'border-bottom': 'none'}"
-          style="width: 100%"
+      <Row :gutter="[8, 8]">
+        <Col
+          :xs="24"
+          :md="12"
+          :lg="8"
+          :xl="6"
+          v-for="(nav, navIndex) in category.children" :key="navIndex"
         >
-          <Row :gutter="[8, 8]">
-            <Col
-              :xs="24"
-              :md="12"
-              :lg="8"
-              :xl="6"
-              v-for="(nav, navIndex) in category.children" :key="navIndex"
-            >
-              <a :href="nav.link" target="_blank">
-                <Card size="small">
-                  <CardMeta
-                    :title="nav.title"
-                  >
-                    <template #avatar>
-                      <Avatar :src="nav.icon" />
-                    </template>
-                    <template #description>
-                      <div style="height: 45px">{{ nav.description }}</div>
-                    </template>
-                  </CardMeta>
-                </Card>
-              </a>
-            </Col>
-          </Row>
-        </Card>
+          <a :href="nav.link" target="_blank">
+            <Card size="small">
+              <CardMeta
+                :title="nav.title"
+              >
+                <template #avatar>
+                  <Avatar :src="nav.icon" />
+                </template>
+                <template #description>
+                  <div style="height: 45px">{{ nav.description }}</div>
+                </template>
+              </CardMeta>
+            </Card>
+          </a>
+        </Col>
       </Row>
-    </Content>
-    <Footer style="text-align: center">
-      COLDTEA INSIGHT OF INNOVATION ROAD
-    </Footer>
-  </Layout>
+    </Card>
+  </Row>
 </template>
 <script>
-import {
-  PieChartOutlined,
-  DesktopOutlined,
-  UserOutlined,
-  TeamOutlined,
-  FileOutlined,
-} from '@ant-design/icons-vue';
-import { defineComponent, ref } from 'vue';
-import { Layout, Menu, Card, Row, Col, Avatar } from 'ant-design-vue';
-const { Header, Content, Footer} = Layout
-const MenuItem = Menu.Item
-const SubMenu = Menu.SubMenu
+import { defineComponent } from 'vue';
+import { Card, Row, Col, Avatar } from 'ant-design-vue';
+import navService from '../../service/nav.service'
+import { useRequest } from 'vue-request';
 const CardMeta = Card.Meta
 export default defineComponent({
   components: {
-    PieChartOutlined,
-    DesktopOutlined,
-    UserOutlined,
-    TeamOutlined,
-    FileOutlined,
-    Layout,
-    Header,
-    Content,
-    Footer,
-    Menu,
-    MenuItem,
-    SubMenu,
     Card,
     Row,
     Col,
@@ -115,10 +48,15 @@ export default defineComponent({
     Avatar,
   },
 
-  data() {
+  setup(){
+    const { data: navList } = useRequest(navService.getFormatNav)
     return {
-      collapsed: ref(false),
-      selectedKeys: ref(['1']),
+      navList
+    }
+  },
+
+  dataBackup() {
+    return {
       navList: [{
         category: '团队组织',
         children: [{

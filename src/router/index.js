@@ -9,6 +9,9 @@ const router = createRouter({
     },{
       path: '/hello',
       component: ()=>import('@/components/HelloWorld.vue')
+    },{
+      path: '/nav',
+      component: ()=>import('@/views/nav/list.vue')
     }
   ]
 })
